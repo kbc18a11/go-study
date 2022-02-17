@@ -2,34 +2,31 @@ package main
 
 import "fmt"
 
-type Person struct {
-	firstName string
-	age       int
+type Person struct{}  //Person構造体
+type Person2 struct{} //Person2構造体
+
+type People interface {
+	intro()
 }
 
-func (a Person) name() string { //Personのメソッド
-	return a.firstName + " Personのやつ"
+func IntroForPerson(arg People) {
+	arg.intro()
 }
 
-func (p Person) getAge() int {
-	return p.age
+//Person構造体のメソッドintro()
+func (p *Person) intro() {
+	fmt.Println("Hello World")
 }
 
-type User struct {
-	Person
-}
-
-func (a User) name() string { //Userのメソッド
-	return a.firstName + " Userのやつ"
+//Person2構造体のメソッドintro()
+func (p *Person2) intro() {
+	fmt.Println("Hello World")
 }
 
 func main() {
-	bob := Person{"Bob", 10}
-	mike := User{}
-	mike.firstName = "Mike"
-	mike.age = 20
+	bob := new(Person)
+	mike := new(Person2)
 
-	fmt.Println(bob.name())    //=> Bob
-	fmt.Println(mike.name())   //=> Mike
-	fmt.Println(mike.getAge()) //=> Mike
+	IntroForPerson(bob)  //=> Hello World
+	IntroForPerson(mike) //=> Hello World
 }
